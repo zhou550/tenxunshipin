@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 
-    <MovieList :col="5"/>
+    <MovieList :col="6"/>
 
 <!--    <el-container>-->
 <!--      <el-header>Header</el-header>-->

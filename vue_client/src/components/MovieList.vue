@@ -1,33 +1,23 @@
 <template>
   <div class="movieList">
+    <div class="listhead">
+      <h2 class="mod_title"><a href="#">
+        电影
+      </a></h2>
+      <div class="mod_page_small">
+        <button class="btn_prev" :class="{'disabled':curPage==1}" @click="prePage">
+          <i class="el-icon-arrow-left"></i>
+        </button>
+        <span class="page_num">{{curPage}}/{{pages}}</span>
+        <button class="btn_next" :class="{'disabled':curPage==pages}" @click="nextPage">
+          <i class="el-icon-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+    <div class="itemswrap">
+      <MovieItem v-for="(movie, index) in getCurPage()" :key="index" :movie="movie"/>
+    </div>
 
-    <el-row>
-      <el-row type="flex"  justify="space-between">
-        <el-col :span="4">
-          <h2 class="mod_title"><a href="#">
-            电影
-          </a></h2>
-        </el-col>
-        <el-col :span="4" >
-          <div class="mod_page_small">
-            <button class="btn_prev" :class="{'disabled':curPage==1}" @click="prePage">
-              <i class="el-icon-arrow-left"></i>
-            </button>
-            <span class="page_num" >{{curPage}}/{{pages}}</span>
-            <button class="btn_next" :class="{'disabled':curPage==pages}"  @click="nextPage">
-              <i class="el-icon-arrow-right"></i>
-            </button>
-          </div>
-        </el-col>
-
-      </el-row>
-    </el-row>
-
-    <el-row :gutter="10" v-show="curPage==n" v-for="n in pages" >
-      <el-col :span="Math.floor(24/col)" v-for="(movie, index) in getCurPage(n)" :key="index">
-        <MovieItem :movie="movie"/>
-      </el-col>
-    </el-row>
   </div>
 </template>
 
@@ -37,59 +27,60 @@
 
   export default {
     name: 'MovieList',
-    data () {
+    data() {
       return {
         movies: [],
-        row:2,
-        curPage:1
+        row: 2,
+        curPage: 1,
+        curitem: 0
       }
     },
     props: ['col'],
 
-    computed :{
-      pages:function () {
+    computed: {
+      pages: function () {
         var row = 2
         var num = Math.ceil(this.movies.length / (row * this.col));
         return num;
       }
     },
     components: {MovieItem},
-    mounted () {
+    mounted() {
       // 发ajax请求进行搜索
-
-      const url = `/api/lastmovies/31`
+      const url = `/video/list?offset=0&pagesize=30`
       axios.get(url)
         .then(response => {
-          console.log(1)
-          console.log(response)
           // 成功了
-          this.movies = response.data
-
+          this.movies = response.data.data
         })
         .catch(error => {
           // 失败了
-          console.log(2)
-          console.log(response)
           console.log(error)
         })
     },
-    methods:{
-      getCurPage:function (n) {
-        var start=(n-1)*(this.row*this.col);
-        var fend=start+this.row*this.col;
-        var end=fend>this.movies.length?this.movies.length:fend;
-        console.log(start+" "+end)
-        return this.movies.slice(start,end);
+    methods: {
+      getCurPage: function () {
+        var fend = this.curitem + this.row * this.col;
+        var end = fend > this.movies.length ? this.movies.length : fend;
+        return this.movies.slice(this.curitem, end);
       },
-      prePage:function () {
-        if(this.curPage>1){
+      prePage: function () {
+        if (this.curPage > 1) {
           this.curPage--;
+          this.curitem=this.curitem-this.row * this.col
+          if(this.curitem<0){
+            this.curitem=0;
+          }
         }
 
       },
-      nextPage:function () {
-        if(this.curPage<this.pages){
+      nextPage: function () {
+        if (this.curPage < this.pages) {
           this.curPage++;
+          this.curitem=this.curitem+this.row * this.col
+          if(this.curitem>this.movies.length-this.row * this.col){
+            this.curitem=this.movies.length-this.row * this.col;
+          }
         }
       }
     }
@@ -97,10 +88,28 @@
   }
 </script>
 
-<style scoped>
-.movieList{
-  padding: 5px 20px;
-}
+<style lang="stylus">
+  .movieList
+    display flex
+    flex-direction column
+    padding: 5px 20px
+    width 1314px
+    height 770px
+    .listhead
+      display flex
+      justify-content space-between
+      padding 0 10px
+
+    .itemswrap
+      display: grid;
+      grid-template-columns: repeat(6, 198px)
+      grid-template-rows: repeat(2, 335px)
+      justify-items: center;
+      align-items: center;
+      justify-content:space-between;
+      align-content:space-between;
+
+
 
   a {
     text-decoration: none;
@@ -128,52 +137,53 @@
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    position: absolute;
-    top: 0;
-    right: 0;
+
     background-color: #fff;
     font-size: 0;
     user-select: none;
   }
 
 
-
-
-  button{
+  button {
     border: 0;
     background-color: transparent;
-   cursor: pointer;
+    cursor: pointer;
     box-sizing: content-box;
     outline: 0 none;
     padding: 0;
   }
+
   .mod_page_small .disabled {
-     color: #ccc;
-   }
+    color: #ccc;
+  }
+
   .mod_page_small .btn_next:hover, .mod_page_small .btn_prev:hover {
     background-color: #f8f8f8;
     color: #ff5c38;
   }
+
   .mod_page_small .page_num {
-     display: inline-block;
-     min-width: 20px;
-     margin: 0 15px;
-     color: #666;
-     font-size: 14px;
-     letter-spacing: 2px;
-     line-height: 30px;
-     text-align: center;
-     vertical-align: top;
-   }
+    display: inline-block;
+    min-width: 20px;
+    margin: 0 15px;
+    color: #666;
+    font-size: 14px;
+    letter-spacing: 2px;
+    line-height: 30px;
+    text-align: center;
+    vertical-align: top;
+  }
+
   .mod_page_small .btn_next, .mod_page_small .btn_prev {
-      display: inline-block;
-      width: 30px;
-      height: 30px;
-      border-radius: 100%;
-      color: #666;
-      text-align: center;
-      vertical-align: top;
-    }
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    color: #666;
+    text-align: center;
+    vertical-align: top;
+  }
+
   .mod_page_small .disabled {
     color: #ccc;
   }

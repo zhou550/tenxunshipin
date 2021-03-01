@@ -1,42 +1,40 @@
 <template>
-  <div class="itemWrap">
+  <div class="itembox">
     <div class="list_item ">
-      <a :href="link" target="_blank" class="figure" >
-        <img @mouseenter="handleEnter(true)"  class="figure_pic posterHalf"  onerror="picerr(this,'v')"
-             :src="movie.posterLink" style="visibility: visible;">
-<!---->
-        <div class="figure_score">7.6</div>
-<!---->
+      <a :href="link" target="_blank" class="figure">
+        <img @mouseenter="handleEnter(true)" class="figure_pic posterHalf" onerror="picerr(this,'v')"
+             :src="movie.poster" style="visibility: visible;">
+        <!---->
+        <div class="figure_score">{{movie.score}}</div>
+        <!---->
         <img class="mark_v mark_v_VIP" src="//puui.qpic.cn/vupload/0/20190716_sub_poster_vip.png/0">
       </a>
       <div class="figure_detail figure_detail_two_row  ">
-        <a :href="link" target="_blank" class="figure_title figure_title_two_row bold" >{{movie.fanhao}}</a>
-        <div class="figure_desc" :title="movie.chineseTitle">{{movie.chineseTitle}}</div>
+        <a :href="link" target="_blank" class="figure_title figure_title_two_row bold">{{movie.title}}</a>
+        <div class="figure_desc" :title="movie.title">{{movie.sub_title}}</div>
       </div>
     </div>
 
-    <div class="x_layer_card" v-show="isShow"  @mouseleave="handleEnter(false)" >
+    <div class="x_layer_card" v-show="isShow" @mouseleave="handleEnter(false)">
       <div class="x_layer_card_bd" style="width: 232px; left: -28px; top: 0px;">
         <div class="x_layer_card_video">
-          <!-- IE9无法小视频 显示海报图 -->
           <div class="figure_video_pic" style="height: 168px; width: 232px;">
-            <a :href="link" target="_blank" class="figure">
-              <img  :src="movie.posterLink" style="object-fit: cover" >
-            </a>
+            <img :src="movie.poster" style="object-fit: cover">
           </div>
           <div class="video_content no_honor">
-            <div class="video_title" ><a class="tit" :href="link" target="_blank">{{movie.fanhao}}</a></div>
+            <div class="video_title"><a class="tit" :href="link" target="_blank">{{movie.fanhao}}</a></div>
             <div class="video_tags" title=" 动作 武侠 张子文 马牧萱 刘承俊 刘权友"><span class="tag">动作</span><span
               class="tag">武侠</span><span class="tag">张子文</span><span class="tag">马牧萱</span><span
               class="tag">刘承俊</span><span
               class="tag">刘权友</span></div>
-            <div class="video_sum"><span class="tit">简介: </span><span class="txt">{{movie.chineseTitle}}</span>
+            <div class="video_sum"><span class="tit">简介: </span><span class="txt">东京都内发生了三起杀人事件。警方从所有案发现场都遗留有的无法解释的数列推断出这是一系列带有预告信息的连环杀人案，并就此展开了侦查然</span>
             </div>
             <div class="video_play"><a href="https://v.qq.com/x/cover/mzc002009r3bfun.html" target="_blank"
                                        class="btn_play"
                                        _float_click="play">立即观看</a><span class="video_btn"><a href="javascript:;"
                                                                                               class="z_figure_collect _follow"><i
-              class="icon_sm icon_collect_sm" title="收藏"></i><i class="icon_sm icon_collected_sm" title="取消收藏"></i></a><a
+              class="icon_sm icon_collect_sm" title="收藏"></i><i class="icon_sm icon_collected_sm"
+                                                                title="取消收藏"></i></a><a
               href="javascript:;" class="z_figure_dl _down" data-clipboard-text="qqlivechannel=channel1.vfloat"><i
               class="icon_sm icon_dl_sm" title="用客户端下载视频"></i></a></span></div>
           </div>
@@ -49,19 +47,19 @@
 <script>
   export default {
     name: 'MovieItem',
-    data () {
+    data() {
       return {
         isShow: false
       }
     },
-    computed:{
-      link:function () {
-        return "detail.html?n="+this.movie.fanhao;
+    computed: {
+      link: function () {
+        return "detail.html?n=" + this.movie.fanhao;
       }
     },
-    props:['movie'],
+    props: ['movie'],
     methods: {
-      handleEnter (isEnter) {
+      handleEnter(isEnter) {
         if (isEnter) { // 进入
           this.isShow = true
         } else { // 离开
@@ -74,8 +72,8 @@
 
 <style scoped>
 
-  .posterHalf{
-  object-position: 104% 50%;
+  .posterHalf {
+    object-position: 104% 50%;
   }
 
   .x_layer_card_bd {
@@ -475,9 +473,10 @@
     content: "20190327113528"
   }
 
-.itemWrap{
-  position: relative;
-}
+  .itembox {
+    position: relative;
+  }
+
   .list_item {
     width: 183px;
 
