@@ -2,6 +2,21 @@ from flask import Flask, Blueprint, request
 from flask_sqlalchemy import SQLAlchemy
 from flask import jsonify
 import json
+
+def serialize(model):
+    from sqlalchemy.orm import class_mapper
+    columns = [c.key for c in class_mapper(model.__class__).columns]
+    return dict((c, getattr(model, c)) for c in columns)
+
+
+def returnjson(list):
+    seriallist=[]
+    for i in list:
+        seriallist.append(serialize(i))
+    return jsonify({"success": "1","data":seriallist})
+
+
+
 app = Flask(__name__, )
 
 
@@ -14,7 +29,34 @@ class Config(object):
 app.config.from_object(Config)
 
 db = SQLAlchemy(app)
+class IndexItem(db.Model):
+    """用户基本信息表"""
+    __tablename__ = 'indexitem'
 
+    id = db.Column('id', db.BigInteger, primary_key=True, doc='视频id')
+    indextype = db.Column(db.String, doc='手机号')
+    img = db.Column(db.String, doc='手机号')
+    title = db.Column(db.String, doc='手机号')
+    description = db.Column(db.String, doc='手机号')
+    caption = db.Column(db.String, doc='手机号')
+    link = db.Column(db.String, doc='手机号')
+    sort = db.Column(db.String, doc='手机号')
+    indexdate = db.Column(db.String, doc='手机号')
+
+
+    def jsonstr(self):
+        jsondata = {
+            'id': self.id,
+            'indextype': self.indextype,
+            'img': self.img,
+            'title': self.title,
+            'description': self.description,
+            'caption': self.caption,
+            'link': self.link,
+            'sort': self.sort,
+            'indexdate': self.indexdate,
+        }
+        return jsondata
 
 class Video(db.Model):
     """用户基本信息表"""
@@ -62,23 +104,21 @@ index_bp = Blueprint('index', __name__)
 @index_bp.route('/hello')
 def hello():
     return 'hello'
+@index_bp.route('/index/items')
+def idexitem():
+    type = request.args.get('type')
+    query = IndexItem.query.filter_by(indextype=type)
+    query.order_by(IndexItem.id.desc())
+    ret = query.all()
+
+    return returnjson(ret)
 
 
 # 创建视频业务蓝图对象
 video_bp = Blueprint('video', __name__)
 
 
-def serialize(model):
-    from sqlalchemy.orm import class_mapper
-    columns = [c.key for c in class_mapper(model.__class__).columns]
-    return dict((c, getattr(model, c)) for c in columns)
 
-
-def returnjson(list):
-    seriallist=[]
-    for i in list:
-        seriallist.append(serialize(i))
-    return jsonify({"success": "1","data":seriallist})
 
 
 @video_bp.route('/list')

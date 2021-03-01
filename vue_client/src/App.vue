@@ -15,7 +15,7 @@
 <!--    </el-container>-->
 
 <Search></Search>
-
+<IndexRank    rankname="电视剧排行榜" :indexitems="tv_rank"></IndexRank>
   </div>
 </template>
 
@@ -23,11 +23,50 @@
   import MovieList from './components/MovieList.vue'
   import Search from './components/Search.vue'
   import Actress from './components/Actress.vue'
+  import IndexRank from "./components/indexRank";
+  import axios from 'axios'
   export default {
     name: 'App',
+    data() {
+      return {
+        index_slider:[],
+        tv_rank:[],
+      }
+    },
+
     components: {
-      MovieList,Search,Actress
-    }
+      MovieList,Search,Actress,IndexRank,
+    },
+
+    mounted() {
+      // 发ajax请求进行搜索
+      const url = `/index/items?type=index_slider`
+      axios.get(url)
+        .then(response => {
+          // 成功了
+          this.index_slider =response.data.data
+
+        })
+        .catch(error => {
+          // 失败了
+          console.log(error)
+        })
+      const url2 = `/index/items?type=tv_rank`
+      axios.get(url2)
+        .then(response => {
+          // 成功了
+          let list = response.data.data
+          if(list.length>8){
+            list=list.slice(0,8)
+          }
+          this.tv_rank = list
+
+        })
+        .catch(error => {
+          // 失败了
+          console.log(error)
+        })
+    },
   }
 </script>
 
