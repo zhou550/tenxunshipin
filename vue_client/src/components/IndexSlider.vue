@@ -55,7 +55,7 @@
     z-index: 1;
     position: relative;
     height: 500px;
-    margin-top: -80px;
+
     margin-bottom: 30px;
     overflow: hidden;
 
@@ -78,15 +78,15 @@
       justify-content space-around
       width: 310px;
       top: 68px;
-      padding-top: 0;
+
       background: rgba(15, 15, 30, .4);
       z-index: 2;
       position: absolute;
-      top: 40px;
       right: 0;
       bottom: 0;
       width: 348px;
-      padding-top: 34px;
+      padding 20px 0
+
       overflow: hidden;
       background: #0f0f1e;
       background: rgba(15, 15, 30, .5);

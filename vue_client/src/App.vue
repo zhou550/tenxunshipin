@@ -1,21 +1,25 @@
 <template>
   <div id="app">
-<IndexSlider :sliders="index_slider"></IndexSlider>
-    <MovieList :col="6"/>
+    <IndexNav></IndexNav>
+    <IndexSlider :sliders="index_slider"></IndexSlider>
 
-<!--    <el-container>-->
-<!--      <el-header>Header</el-header>-->
-<!--      <el-container>-->
-<!--        <el-aside width="200px">Aside</el-aside>-->
-<!--        <el-container>-->
-<!--          <el-main>Main</el-main>-->
-<!--          <el-footer>Footer</el-footer>-->
-<!--        </el-container>-->
-<!--      </el-container>-->
-<!--    </el-container>-->
 
-<Search></Search>
-<IndexRank    rankname="电视剧排行榜" :indexitems="tv_rank"></IndexRank>
+    <!--    <el-container>-->
+    <!--      <el-header>Header</el-header>-->
+    <!--      <el-container>-->
+    <!--        <el-aside width="200px">Aside</el-aside>-->
+    <!--        <el-container>-->
+    <!--          <el-main>Main</el-main>-->
+    <!--          <el-footer>Footer</el-footer>-->
+    <!--        </el-container>-->
+    <!--      </el-container>-->
+    <!--    </el-container>-->
+
+<div style="display: flex;justify-content: center">
+  <MovieList :col="6"/>
+  <IndexRank rankname="电视剧排行榜" :indexitems="tv_rank"></IndexRank>
+</div>
+
   </div>
 </template>
 
@@ -25,18 +29,20 @@
   import Actress from './components/Actor.vue'
   import IndexRank from "./components/indexRank";
   import IndexSlider from "./components/IndexSlider";
+  import IndexNav from "./components/IndexNav";
   import axios from 'axios'
+
   export default {
     name: 'App',
     data() {
       return {
-        index_slider:[],
-        tv_rank:[],
+        index_slider: [],
+        tv_rank: [],
       }
     },
 
     components: {
-      MovieList,Search,Actress,IndexRank,IndexSlider,
+      MovieList, Search, Actress, IndexRank, IndexSlider, IndexNav,
     },
 
     mounted() {
@@ -45,7 +51,7 @@
       axios.get(url)
         .then(response => {
           // 成功了
-          this.index_slider =response.data.data
+          this.index_slider = response.data.data
 
         })
         .catch(error => {
@@ -57,8 +63,8 @@
         .then(response => {
           // 成功了
           let list = response.data.data
-          if(list.length>8){
-            list=list.slice(0,8)
+          if (list.length > 8) {
+            list = list.slice(0, 8)
           }
           this.tv_rank = list
 
@@ -75,6 +81,7 @@
   body
     margin 0
     padding 0
+
   .el-header, .el-footer {
     background-color: #B3C0D1;
     color: #333;
