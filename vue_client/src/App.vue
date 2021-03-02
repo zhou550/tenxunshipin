@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-
+<IndexSlider :sliders="index_slider"></IndexSlider>
     <MovieList :col="6"/>
 
 <!--    <el-container>-->
@@ -22,8 +22,9 @@
 <script>
   import MovieList from './components/MovieList.vue'
   import Search from './components/Search.vue'
-  import Actress from './components/Actress.vue'
+  import Actress from './components/Actor.vue'
   import IndexRank from "./components/indexRank";
+  import IndexSlider from "./components/IndexSlider";
   import axios from 'axios'
   export default {
     name: 'App',
@@ -35,7 +36,7 @@
     },
 
     components: {
-      MovieList,Search,Actress,IndexRank,
+      MovieList,Search,Actress,IndexRank,IndexSlider,
     },
 
     mounted() {
@@ -70,7 +71,10 @@
   }
 </script>
 
-<style>
+<style lang="stylus">
+  body
+    margin 0
+    padding 0
   .el-header, .el-footer {
     background-color: #B3C0D1;
     color: #333;

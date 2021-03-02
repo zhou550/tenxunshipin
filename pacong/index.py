@@ -43,10 +43,11 @@ def scrapysliders(bs):
     sliderlist = []
     for slider in sliders:
         poster = slider.get("data-bgimage")
+        color = slider.get("data-bgcolor")
         title = slider.select(".title_text")[0].get_text()
         subtitle = slider.select(".text2")[0].get_text()
         subtitle = subtitle.replace(title, "")
-        sliderdict = {"img": poster, "title": title, "caption": subtitle}
+        sliderdict = {"img": poster, "title": title, "caption": subtitle,"description":color}
         sliderlist.append(sliderdict)
     return sliderlist
 
