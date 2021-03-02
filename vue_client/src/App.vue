@@ -15,11 +15,13 @@
     <!--      </el-container>-->
     <!--    </el-container>-->
 <MultipleSelect></MultipleSelect>
+
+
 <div style="display: flex;justify-content: center">
   <MovieList :col="6"/>
   <IndexRank rankname="电视剧排行榜" :indexitems="tv_rank"></IndexRank>
 </div>
-
+<InfiniteScrollVideoList></InfiniteScrollVideoList>
   </div>
 </template>
 
@@ -31,6 +33,8 @@
   import IndexSlider from "./components/IndexSlider";
   import IndexNav from "./components/IndexNav";
   import MultipleSelect from "./components/MultipleSelect";
+
+  import InfiniteScrollVideoList from "./components/InfiniteScrollVideoList";
   import axios from 'axios'
 
   export default {
@@ -43,7 +47,7 @@
     },
 
     components: {
-      MovieList, Search, Actress, IndexRank, IndexSlider, IndexNav,MultipleSelect,
+      MovieList, Search, Actress, IndexRank, IndexSlider, IndexNav,MultipleSelect,InfiniteScrollVideoList,
     },
 
     mounted() {
