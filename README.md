@@ -11,10 +11,13 @@
 #3 安装与使用
 1，数据库
 创建数据库tenxunvideo，执行tenxunvideo.sql。
+
 2，爬虫
 pacong文件夹为爬虫项目，运行scrapvideos.py爬取视频数据，运行index.py爬取首页信息。
+
 3，flask服务器
 flask_server文件夹为flask服务器项目，运行app.py开启服务器。
+
 4，vue客户端
 vue_client为vue项目。
 切换到该目录。
@@ -22,4 +25,7 @@ vue_client为vue项目。
 npm install #安装项目
 npm run dev #运行项目
 
-![avatar](http://baidu.com/pic/doge.png)
+#截图
+
+![avatar](https://github.com/zhou550/tenxunshipin/blob/main/vue_client/pic_index.png)
+![avatar](https://github.com/zhou550/tenxunshipin/blob/main/vue_client/pic_videos.png)
