@@ -25,14 +25,20 @@ def scrapVideos(type, offset, pagesize):
     list_items = bs.select("div.list_item")
     videos = []
     for list_item in list_items:
-        playPage = list_item.select("a.figure")[0].get("href")
-        poster = list_item.select("img.figure_pic")[0].get("src")
-        caption = list_item.select(".figure_caption")[0].get_text()
+        if len(list_item.select("a.figure")) > 0:
+            playPage = list_item.select("a.figure")[0].get("href")
+        if len(list_item.select("img.figure_pic")) > 0:
+            poster = list_item.select("img.figure_pic")[0].get("src")
+        if len(list_item.select(".figure_caption")) > 0:
+            caption = list_item.select(".figure_caption")[0].get_text()
         if len(list_item.select(".figure_score")) > 0:
             score = list_item.select(".figure_score")[0].get_text()
-        title = list_item.select("div.figure_detail>a.figure_title")[0].get_text()
-        desc = list_item.select("div.figure_detail>.figure_desc")[0].get_text()
-        playCount = list_item.select("div.figure_count")[0].get_text()
+        if len(list_item.select("div.figure_detail>a.figure_title")) > 0:
+            title = list_item.select("div.figure_detail>a.figure_title")[0].get_text()
+        if len(list_item.select("div.figure_detail>.figure_desc")) > 0:
+            desc = list_item.select("div.figure_detail>.figure_desc")[0].get_text()
+        if len(list_item.select("div.figure_count")) > 0:
+            playCount = list_item.select("div.figure_count")[0].get_text()
         video = Video()
         video.play_page = playPage
         video.poster = poster
@@ -74,7 +80,7 @@ if __name__ == '__main__':
     db = pymysql.connect("localhost", "root", "Zhouhao96!", "tenxunvideo")
 
     start = 0
-    end = 300
+    end = 3000
     pagesize = 30
     type = "movie"
     cur = start
