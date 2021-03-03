@@ -117,15 +117,10 @@ def idexitem():
 # 创建视频业务蓝图对象
 video_bp = Blueprint('video', __name__)
 
-
-
-
-
 @video_bp.route('/list')
 def get_videos():
     offset = request.args.get('offset')
     pagesize = request.args.get('pagesize')
-
     query = Video.query.order_by(Video.id.desc())
     query = query.offset(offset).limit(pagesize)
     ret = query.all()
