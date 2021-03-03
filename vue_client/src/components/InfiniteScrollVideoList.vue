@@ -27,6 +27,9 @@
       }
     },
     components: {SimpleMovieItem},
+    mounted() {
+      this.load();
+    },
     methods: {
       getVideos() {
         // 发ajax请求进行搜索
@@ -62,7 +65,8 @@
 
 <style lang="stylus">
   .scrolllist
-    width 100%
+    width 1500px
+    margin 20px auto
     display flex
     flex-wrap wrap
     .item
