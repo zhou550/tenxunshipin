@@ -2,11 +2,11 @@
 
 模仿腾讯视频，爬虫程序
 
-#1项目介绍
+# 1项目介绍
 
 本项目为对腾讯视频网页的爬虫系统，包括爬虫程序，提供爬取数据的服务端程序及展示爬取信息的前端项目三个部分。
 
-#2 选用的技术
+# 2 选用的技术
 
 采用Python语言来开发系统+vue构建页面
 
@@ -16,7 +16,7 @@
 
 后台：flask+flask_sqlalchemy
 
-#3 安装与使用
+# 3 安装与使用
 
 1，数据库
 
@@ -38,7 +38,8 @@ vue_client为vue项目。
 npm install #安装项目
 npm run dev #运行项目
 
-#截图
+# 截图
+
 首页
 
 ![avatar](https://github.com/zhou550/tenxunshipin/blob/main/vue_client/pic_index.png)
